@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOWSHOWBOT · 21 персонаж · Бесконечные диалоги</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #0e0b1a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .telegram-btn {
+            background: #2AABEE;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .telegram-btn:hover {
+            transform: scale(1.05);
+            background: #1e96d4;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px 40px;
+            background: radial-gradient(circle at 50% 30%, rgba(255,215,0,0.08), transparent 70%);
+        }
+
+        .age-badge {
+            background: rgba(255, 70, 70, 0.15);
+            border: 1px solid #ff6b6b;
+            border-radius: 60px;
+            padding: 8px 24px;
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #ff9b9b;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #b0b0b0;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 44px;
+            font-weight: 800;
+            color: #ffd700;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: white;
+            padding: 10px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            color: #0e0b1a;
+            border-color: transparent;
+            font-weight: 600;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            padding: 30px 0 70px;
+        }
+
+        .character-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 32px;
+            padding: 28px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            backdrop-filter: blur(5px);
+        }
+
+        .character-card:hover {
+            transform: translateY(-8px);
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.03);
+            box-shadow: 0 25px 35px rgba(255, 215, 0, 0.1);
+        }
+
+        .character-emoji {
+            font-size: 72px;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 10px 12px rgba(0,0,0,0.3));
+        }
+
+        .character-name {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .character-category {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #ffd700;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .character-tagline {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.4;
+        }
+
+        .pricing-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 80px;
+            padding: 70px 40px;
+            margin: 20px 0 60px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            padding: 50px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+        }
+
+        .pricing-card.premium {
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.08), rgba(255, 123, 123, 0.08));
+            border: 2px solid #ffd700;
+        }
+
+        .pricing-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .pricing-price {
+            font-size: 56px;
+            font-weight: 800;
+            color: #ffd700;
+            margin: 20px 0 10px;
+        }
+
+        .pricing-price small {
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .pricing-period {
+            color: #b0b0b0;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            color: #ccc;
+            margin: 30px 0;
+            font-size: 16px;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+        }
+
+        .pricing-btn {
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            color: #0e0b1a;
+            text-decoration: none;
+            padding: 16px 42px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 15px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pricing-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 50px 0 70px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 40px;
+            padding: 35px 25px;
+            text-align: center;
+        }
+
+        .feature-emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            color: #b0b0b0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #606060;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 42px;
+            }
+            .hero p {
+                font-size: 18px;
+            }
+            .pricing-section {
+                padding: 40px 20px;
+                border-radius: 40px;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">⚡ NOWSHOWBOT</div>
+            <a href="https://t.me/NOWSHOW_BOT" class="telegram-btn" target="_blank">
+                🤖 Открыть в Telegram
+            </a>
+        </header>
+
+        <section class="hero">
+            <div class="age-badge">🔞 18+ · Ненормативная лексика · Взрослый юмор</div>
+            <h1><span>21 бессмертный персонаж</span><br>в одной вселенной</h1>
+            <p>Ленин, Сталин, Дракула, Ницше, Жириновский, Пугачёва и ещё 15 безумцев.<br>Никаких сценариев. Только живое безумие.</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">21</div>
+                    <div class="stat-label">персонаж</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">сюжетов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1ч</div>
+                    <div class="stat-label">бесплатно</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10⭐</div>
+                    <div class="stat-label">в сутки</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="politics">Политика</button>
+            <button class="filter-btn" data-filter="philosophy">Философия</button>
+            <button class="filter-btn" data-filter="culture">Культура</button>
+            <button class="filter-btn" data-filter="mystic">Мистика</button>
+            <button class="filter-btn" data-filter="beauty">Красота</button>
+        </div>
+
+        <div class="characters-grid" id="characterGrid"></div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-emoji">👥</div>
+                <div class="feature-title">Групповые чаты</div>
+                <div class="feature-desc">Собери до 5 персонажей в одной комнате и наблюдай за безумием</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-emoji">🧠</div>
+                <div class="feature-title">Эмоциональная память</div>
+                <div class="feature-desc">Персонажи помнят тебя и ваши прошлые разговоры</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-emoji">🔊</div>
+                <div class="feature-title">Голосовые ответы</div>
+                <div class="feature-desc">Каждый персонаж говорит своим голосом (скоро)</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-emoji">🎰</div>
+                <div class="feature-title">Бесконечные сюжеты</div>
+                <div class="feature-desc">Ни одного повтора. Каждый диалог уникален</div>
+            </div>
+        </div>
+
+        <section class="pricing-section">
+            <h2 class="section-title"><span>Цены</span></h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">Пробный час</div>
+                    <div class="pricing-price">0 <small>⭐</small></div>
+                    <div class="pricing-period">при первом входе</div>
+                    <ul class="pricing-features">
+                        <li>✅ 20 сообщений</li>
+                        <li>✅ Все 21 персонаж</li>
+                        <li>✅ Без карты</li>
+                    </ul>
+                    <a href="https://t.me/NOWSHOW_BOT" class="pricing-btn" target="_blank">Попробовать</a>
+                </div>
+                <div class="pricing-card premium">
+                    <div class="pricing-name">Полный доступ</div>
+                    <div class="pricing-price">10 <small>⭐</small></div>
+                    <div class="pricing-period">в сутки</div>
+                    <ul class="pricing-features">
+                        <li>✅ Безлимитные сообщения</li>
+                        <li>✅ Все 21 персонаж</li>
+                        <li>✅ Групповые чаты</li>
+                        <li>✅ История сохраняется</li>
+                    </ul>
+                    <a href="https://t.me/NOWSHOW_BOT" class="pricing-btn" target="_blank">Получить доступ</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            © 2026 NOWSHOWBOT · 18+ · Бесконечное шоу внутри Telegram
+        </footer>
+    </div>
+
+    <script>
+        const characters = [
+            // Политика
+            { name: "Ленин", emoji: "👨", cat: "politics", line: "\"Товарищ, это классовая борьба!\"" },
+            { name: "Сталин", emoji: "👨‍🦰", cat: "politics", line: "\"Кадры решают всё, товарищ.\"" },
+            { name: "Жириновский", emoji: "🗣️", cat: "politics", line: "\"Сапоги в Индийском океане!\"" },
+            { name: "Черчилль", emoji: "🧐", cat: "politics", line: "\"Мы будем сражаться на пляжах.\"" },
+            { name: "Наполеон", emoji: "🎖️", cat: "politics", line: "\"Величие не знает границ.\"" },
+            { name: "Мавроди", emoji: "💰", cat: "politics", line: "\"Хочешь заработать? Пирамида!\"" },
+            
+            // Философия
+            { name: "Ницше", emoji: "🧠", cat: "philosophy", line: "\"Бог умер. А вы?\"" },
+            { name: "Кант", emoji: "📚", cat: "philosophy", line: "\"Категорический императив.\"" },
+            { name: "Гегель", emoji: "📖", cat: "philosophy", line: "\"Диалектика спасёт мир.\"" },
+            { name: "Эйнштейн", emoji: "🧪", cat: "philosophy", line: "\"Всё относительно.\"" },
+            { name: "Свами Шивананда", emoji: "🧘", cat: "philosophy", line: "\"Карма не дремлет.\"" },
+            
+            // Культура
+            { name: "Высоцкий", emoji: "🎸", cat: "culture", line: "\"Лучше гор могут быть только горы.\"" },
+            { name: "Цой", emoji: "🎤", cat: "culture", line: "\"Перемен!\"" },
+            { name: "Пугачёва", emoji: "👩", cat: "culture", line: "\"Миллион алых роз.\"" },
+            { name: "Майкл Джексон", emoji: "💃", cat: "culture", line: "\"Хи-хи! Шамо-о-он!\"" },
+            { name: "Чаплин", emoji: "🎭", cat: "culture", line: "\"... (молча, но смешно)\"" },
+            { name: "Джигурда", emoji: "🎭", cat: "culture", line: "\"Я космос! Я русоид!\"" },
+            { name: "Моисеев", emoji: "🕺", cat: "culture", line: "\"Детка, это шоу!\"" },
+            
+            // Мистика
+            { name: "Дракула", emoji: "🦇", cat: "mystic", line: "\"Кровь... это жизнь...\"" },
+            { name: "Линь Цзы", emoji: "🀄", cat: "mystic", line: "\"Слушай тишину...\"" },
+            
+            // Красота
+            { name: "Красивая Блондинка", emoji: "👩‍🦳", cat: "beauty", line: "\"Милый, это новые туфли!\"" },
+            { name: "Красивая Мулатка", emoji: "👩🏽", cat: "beauty", line: "\"Танцуй, амиго!\"" }
+        ];
+
+        const grid = document.getElementById('characterGrid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function render(cat = 'all') {
+            const filtered = cat === 'all' ? characters : characters.filter(c => c.cat === cat);
+            grid.innerHTML = filtered.map(c => `
+                <div class="character-card" onclick="window.open('https://t.me/NOWSHOW_BOT', '_blank')">
+                    <div class="character-emoji">${c.emoji}</div>
+                    <div class="character-name">${c.name}</div>
+                    <div class="character-category">${c.cat}</div>
+                    <div class="character-tagline">${c.line}</div>
+                </div>
+            `).join('');
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                render(btn.dataset.filter);
+            });
+        });
+
+        render('all');
+    </script>
+</body>
+</html>
