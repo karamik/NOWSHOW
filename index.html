@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOWSHOWBOT · Interactive Show</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d0b1a 0%, #1a1a2f 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            color: #ffd700;
+        }
+
+        .telegram-btn {
+            background: #2AABEE;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s;
+        }
+
+        .telegram-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: radial-gradient(circle at 50% 30%, rgba(255,215,0,0.1), transparent 60%);
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #c0c0c0;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ff7b7b);
+            color: #0d0b1a;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            border: 1px solid rgba(255,215,0,0.3);
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,215,0,0.1);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #606060;
+            border-top: 1px solid rgba(255,215,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">⚡ NOWSHOWBOT</div>
+        <div class="nav">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#price">Price</a>
+        </div>
+        <a href="https://t.me/NOWSHOW_BOT" class="telegram-btn" target="_blank">
+            🤖 Open in Telegram
+        </a>
+    </header>
+
+    <section class="hero">
+        <h1>
+            <span>Interactive show</span><br>
+            inside Telegram
+        </h1>
+        <p>
+            Talk with 21 unique characters. Each conversation is one-of-a-kind.<br>
+            First hour — free.
+        </p>
+        <div class="cta-buttons">
+            <a href="https://t.me/NOWSHOW_BOT" class="btn-primary" target="_blank">🎭 Start now</a>
+            <a href="#features" class="btn-secondary">Learn more</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        © 2026 NOWSHOWBOT · 18+ · Built on Telegram
+    </footer>
+</body>
+</html>
